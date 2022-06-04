@@ -10,8 +10,6 @@ jobs:
   include:
     - language: python
       python: 3.8
-      script:
-      - python -c "print('Hi from Python3!')"
 
 branches:
   only:
@@ -31,14 +29,13 @@ before_script:
 - yarn update
 
 script: 
-- npm run build
+- yarn build
 
 deploy:
   provider: pages
+  strategy: git
   skip_cleanup: true
-  github_token: $GH_TOKEN
-  keep_history: true
-  local_dir: dist
-  on:
-    branch: main
+  token: $GH_TOKEN
+  local_dir: dist/
   fqdn: ipa.citruxonve.net
+  target_branch: gh-pages
