@@ -4,7 +4,7 @@ dist: xenial
 language: node_js
 
 node_js:
-- "17.5"
+- "15"
 
 jobs:
   include:
@@ -16,6 +16,12 @@ jobs:
 branches:
   only:
   - master
+
+before_install: 
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+- source ~/.bashrc
+- nvm install v15.14.0
+- nvm use v15.14.0
 
 install:
 - npm install -g yarn
