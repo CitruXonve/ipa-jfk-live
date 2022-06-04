@@ -1,0 +1,44 @@
+{
+  "name": "ipa-jfk-live",
+  "version": "1.0.0",
+  "description": "Online IPA lookup tool in JFK style",
+  "main": "webServer.js",
+  "scripts": {
+    "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo",
+    "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --watch",
+    "lint": "eslint *.jsx components/*/*.jsx || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CitruXonve/ipa-jfk-live.git"
+  },
+  "author": "CitruXonve <angelikaxu54@gmail.com>",
+  "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/CitruXonve/ipa-jfk-live/issues"
+  },
+  "homepage": "https://github.com/CitruXonve/ipa-jfk-live#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "file-loader": "^6.2.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
+    "url-loader": "^4.1.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.2",
+    "@babel/eslint-parser": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "@babel/runtime": "^7.18.3",
+    "babel-jest": "^28.1.0",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
+    "eslint": "^8.17.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
