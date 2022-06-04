@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, AppBar, Card, CardContent, CardHeader, CssBaseline, Link, Toolbar, Typography, Grid, Box, makeStyles } from '@material-ui/core';
 import { pink } from '@material-ui/core/colors';
 import { Copyright } from '@material-ui/icons';
-import IPAForm from './IpaForm';
+import IpaForm from './IpaForm';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -96,7 +96,7 @@ function IpaMain() {
             <CardHeader title="Show Me IPA NOW!" className={classes.cardHeader}/>
             <CardContent>
               <div className={classes.cardPricing}>
-                <IPAForm format="unicode" outputPhonetic={true} showAdv={false}/>
+                <IpaForm format="unicode" outputPhonetic={true} showAdv={false}/>
               </div>
             </CardContent>
           </Card>
@@ -105,7 +105,7 @@ function IpaMain() {
       <Container maxWidth="sm" component="footer" className={classes.footer}>
         <Grid container spacing={2} justifyContent="space-evenly">
           <Grid item key="footer.title">
-            <Typography variant="title" color="textPrimary" gutterBottom>
+            <Typography variant="subtitle1" color="textPrimary" gutterBottom>
               IPA-JFK
             </Typography>
             <Typography variant="caption" color="textSecondary" display="block" gutterBottom>

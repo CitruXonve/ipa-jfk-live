@@ -12,6 +12,8 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
+import axios from 'axios';
+import db from '../../lib/db';
 
 class IpaForm extends React.Component {
   constructor(props) {
@@ -20,16 +22,8 @@ class IpaForm extends React.Component {
       format: props.format,
       isPhonetic: props.outputPhonetic,
       showAdv: props.showAdv,
-      // cmuPath: require("../../data/cmudict.txt"),
-      // cmu: undefined,
-    };
-    // this.func = require("../func");
-    this.generateResult = (format, phonetic) => {
-      console.log(this.state);
-      this.func.updateByOption(
-        typeof format === 'string' ? format : this.state.format,
-        typeof phonetic === 'boolean' ? phonetic : this.state.isPhonetic,
-      );
+      cmuDict: undefined,
+      formData: {},
     };
   }
 
@@ -40,11 +34,6 @@ class IpaForm extends React.Component {
     });
   };
 
-  handleWordChange = () => {
-    // const word = event.target.value;
-    this.generateResult();
-  };
-
   handleFormatChange = (event) => {
     const formatType = event.target.value;
 
@@ -53,48 +42,41 @@ class IpaForm extends React.Component {
         ...this.state,
         format: formatType,
       });
-      // this.state.format = formatType;
-      // this.forceUpdate();
-      this.generateResult(formatType, undefined);
-    } else {
-      this.generateResult();
     }
   };
 
   handlePhoneticChange = (event) => {
     const checked = event.target.checked;
-    console.log(checked);
 
     this.setState({
       ...this.state,
       isPhonetic: checked,
     });
-    // this.state.isPhonetic = checked;
-    // this.forceUpdate();
-    this.generateResult(undefined, checked);
   };
 
-  // loadCmu = () => {
-  //   console.log('cmu-path', this.state.cmuPath, typeof(this.state.cmuPath));
-  //   if (!this.state.cmu) {
-  //     axios.get(this.state.cmuPath, (err, data) => {
-  //       console.log('Read CMU file:', JSON.stringify(data));
-  //       if (err) {
-  //         console.error('Failed to load CMU file', err.message);
-  //         return;
-  //       }
-  //       this.setState({cmu: data});
-  //     });
-  //   };
-  // }
+  handleFormChange = (fieldName) => {
+    return (event) => {
+      const newFormData = this.state.formData ?? {};
+      newFormData[fieldName] = event.target.value;
+      this.setState({ formData: newFormData });
+    };
+  };
 
-  // componentDidMount() {
-  //   this.loadCmu();
-  // }
+  loadCmuDict = () => {
+    axios.get('/data/cmudict.txt').then(({ data, status, statusText }) => {
+      if (status !== 200 || statusText !== 'OK' || !data) {
+        console.error('Failed to retrieve cmudict', status, statusText);
+      }
+      console.log('Retrieve cmudict successfully');
+      this.setState({ cmuDict: data });
+      db.load(data);
+      db.cache();
+    });
+  };
 
-  // componentDidUpdate() {
-  //   this.loadCmu();
-  // }
+  componentDidMount() {
+    this.loadCmuDict();
+  }
 
   Advanced = () => {
     return (
@@ -120,6 +102,7 @@ class IpaForm extends React.Component {
               variant="outlined"
               color="secondary"
               fullWidth
+              onChange={this.handleFormChange('ph')}
             />
           </Grid>
           <Grid item sm={6}>
@@ -130,6 +113,7 @@ class IpaForm extends React.Component {
               variant="outlined"
               color="secondary"
               fullWidth
+              onChange={this.handleFormChange('ae')}
             >
               <span>/&aelig;/-raising Hints</span>
             </TextField>
@@ -142,10 +126,46 @@ class IpaForm extends React.Component {
               color="secondary"
               variant="outlined"
               fullWidth
+              onChange={this.handleFormChange('syllable')}
             />
           </Grid>
       </Grid>
     );
+  };
+
+  displayIpa = (format, phonemic) => {
+    const group = [];
+    const word = this.state.formData?.word || '';
+    // const ph = this.state.formData?.ph || '';
+    const ae = this.state.formData?.ae || '';
+    const syllable = this.state.formData?.syllable || '';
+    if (!word) {
+      return group;
+    }
+
+    // const phss = ph ? [ph] : db.query(word);
+    const phss = db.query(word) ?? [];
+    let count = 0;
+    for (let phs of phss) {
+      const ir = db.process(phs, word, !phonemic, {
+        aeHint: ae,
+        syllableHint: syllable,
+      });
+
+      switch (format) {
+        case 'unicode':
+          group.push(<li key={`res-grp-${count}`}>{db.display.utf8Encode(ir)}</li>);
+          break;
+        case 'latex':
+          group.push(<li key={`res-grp-${count}`}><pre>{db.display.latexEncode(ir)}</pre></li>);
+          break;
+        default:
+          group.push(<li key={`res-grp-${count}`}><pre>{JSON.stringify(ir, null, 2)}</pre></li>);
+          break;
+      }
+      count += 1;
+    }
+    return group;
   };
 
   // const IPAForm = () => {
@@ -185,7 +205,7 @@ class IpaForm extends React.Component {
                 required
                 fullWidth
                 autoFocus
-                onChange={this.handleWordChange}
+                onChange={this.handleFormChange('word')}
               />
               <FormControl component="fieldset">
                 <RadioGroup
@@ -229,12 +249,12 @@ class IpaForm extends React.Component {
               {this.state.showAdv ? <this.Advanced /> : null}
             </Grid>
 
-            {/* <Grid item sm={12} sm={6}>
-            </Grid> */}
             <Grid item xs={12} sm={6}>
               <FormLabel component="legend">Result(s)</FormLabel>
               <Typography variant="h6" color="textPrimary" component="div">
-                <ul id="_results" className={classes.results}></ul>
+                <ul id="_results" className={classes.results}>
+                  {this.displayIpa(this.state.format, this.state.isPhonetic ?? false)}
+                </ul>
               </Typography>
             </Grid>
           </Grid>

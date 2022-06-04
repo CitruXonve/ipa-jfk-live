@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import IpaMain from './src/components/IpaMain';
-import './src/scss/app.scss';
+import IpaMain from './components/IpaMain';
+import './scss/app.scss';
 
 function IpaJfk() {
   return (

@@ -1,9 +1,10 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 const path = require('path');
 
 module.exports = {
   entry: {
-    ipaJfk: './ipaJfk.jsx',
+    ipaJfk: './src/ipaJfk.jsx',
   },
   module: {
     rules: [{
@@ -48,7 +49,12 @@ module.exports = {
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'ipa-jfk.html'
-    })
+      template: './ipa-jfk.html'
+    }),
+    new CopyPlugin({
+      patterns: [
+        { from: "data", to: "data" },
+      ],
+    }),
   ],
 };

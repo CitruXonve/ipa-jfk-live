@@ -4,15 +4,13 @@
   "description": "Online IPA lookup tool in JFK style",
   "main": "webServer.js",
   "scripts": {
+    "update": "./lib/download.js",
     "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo",
     "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --watch",
     "server": "node webServer.js",
-    "lint": "eslint *.jsx src/components/*.jsx || exit 0"
+    "lint": "eslint *.js *.jsx src/components/*.jsx || exit 0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/CitruXonve/ipa-jfk-live.git"
-  },
+  "repository": "git+https://github.com/CitruXonve/ipa-jfk-live.git",
   "author": "CitruXonve <angelikaxu54@gmail.com>",
   "license": "AGPL-3.0-only",
   "bugs": {
@@ -23,6 +21,7 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "axios": "^0.27.2",
+    "escape-string-regexp": "4.0.0",
     "express": "^4.18.1",
     "file-loader": "^6.2.0",
     "prismjs": "^1.28.0",
@@ -42,6 +41,7 @@
     "@babel/runtime": "^7.18.3",
     "babel-jest": "^28.1.0",
     "babel-loader": "^8.2.5",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "eslint": "^8.17.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -49,6 +49,7 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.0",
     "html-webpack-plugin": "^5.5.0",
+    "mkdirp": "^1.0.4",
     "sass": "^1.52.2",
     "sass-loader": "^13.0.0",
     "style-loader": "^3.3.1",
