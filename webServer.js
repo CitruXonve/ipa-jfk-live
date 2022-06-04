@@ -1,17 +1,19 @@
-'use strict';
-
 /* jshint node: true */
 
-var express = require('express');
+let express = require('express');
 
-var portno = 3000;   // Port number to use
+let portno = 3000; // Port number to use
 
-var app = express();
+let app = express();
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static(__dirname));
 
-var server = app.listen(portno, function () {
-  var port = server.address().port;
-  console.log('Listening at http://localhost:' + port + ' exporting the directory ' + __dirname);
+app.get('/', (request, response) => {
+  response.send(`Simple web server of files from ${__dirname}`);
+});
+
+let server = app.listen(portno, function () {
+  let port = server.address().port;
+  console.log(`Listening at http://localhost:${port} exporting the directory ${__dirname}`);
 });
