@@ -13,7 +13,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 
-class IPAForm extends React.Component {
+class IpaForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -244,4 +244,4 @@ class IPAForm extends React.Component {
   }
 }
 
-export default IPAForm;
+export default IpaForm;

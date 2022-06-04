@@ -1,17 +1,19 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+
 module.exports = {
   entry: {
     ipaJfk: './ipaJfk.jsx',
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
       },
       {
         test: /\.css$/,
-        use: [ "style-loader", "css-loader" ],
+        use: ["style-loader", "css-loader"],
       },
       {
         test: /\.s[ac]ss$/i,
@@ -26,14 +28,12 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|gif)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-            },
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 8192,
           },
-        ],
+        }, ],
       },
     ],
   },
@@ -41,9 +41,14 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   output: {
-    path: `${__dirname}/compiled`,
+    path: path.resolve(__dirname, './dist'),
     publicPath: '/',
     filename: '[name].bundle.js',
   },
   mode: 'development',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'ipa-jfk.html'
+    })
+  ],
 };

@@ -6,6 +6,7 @@
   "scripts": {
     "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo",
     "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --watch",
+    "server": "node webServer.js",
     "lint": "eslint *.jsx src/components/*.jsx || exit 0"
   },
   "repository": {
@@ -47,6 +48,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.30.0",
+    "html-webpack-plugin": "^5.5.0",
     "sass": "^1.52.2",
     "sass-loader": "^13.0.0",
     "style-loader": "^3.3.1",

@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from './src/components/Main';
-// import * as classes from './src/scss/app.scss';
+import IpaMain from './src/components/IpaMain';
+import './src/scss/app.scss';
 
-function App() {
+function IpaJfk() {
   return (
     <div className="App">
-      <Main />
+      <IpaMain />
     </div>
   );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<IpaJfk />, document.getElementById('root'));

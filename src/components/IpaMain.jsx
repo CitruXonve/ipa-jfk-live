@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, AppBar, Card, CardContent, CardHeader, CssBaseline, Link, Toolbar, Typography, Grid, Box, makeStyles } from '@material-ui/core';
 import { pink } from '@material-ui/core/colors';
 import { Copyright } from '@material-ui/icons';
-import IPAForm from './IPA-Form';
+import IPAForm from './IpaForm';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -64,7 +64,7 @@ function CopyrightSection() {
   );
 }
 
-function Main() {
+function IpaMain() {
   const classes = useStyles.apply(this);
 
   return (
@@ -124,4 +124,4 @@ function Main() {
   );
 }
 
-export default Main;
+export default IpaMain;

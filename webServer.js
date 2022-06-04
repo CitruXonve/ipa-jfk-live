@@ -9,8 +9,8 @@ let app = express();
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static(__dirname));
 
-app.get('/', (request, response) => {
-  response.send(`Simple web server of files from ${__dirname}`);
+app.get('/', (req, res) => {
+  res.redirect('/ipa-jfk.html');
 });
 
 let server = app.listen(portno, function () {
