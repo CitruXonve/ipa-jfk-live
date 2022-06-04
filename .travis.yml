@@ -6,11 +6,6 @@ language: node_js
 node_js:
 - "17"
 
-jobs:
-  include:
-    - language: python
-      python: 3.8
-
 branches:
   only:
   - master
