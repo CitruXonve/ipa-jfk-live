@@ -33,13 +33,12 @@ before_script:
 script: 
 - npm run build
 
-after_script: 
-- echo "ipa.citruxonve.net" > dist/CNAME
-
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GH_TOKEN
   keep_history: true
+  local_dir: dist
   on:
     branch: main
+  fqdn: ipa.citruxonve.net
