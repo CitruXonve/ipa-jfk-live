@@ -1,0 +1,36 @@
+# Deploy ipa-jfk tool using parcel
+
+dist: xenial
+language: node_js
+
+node_js:
+- "17"
+
+branches:
+  only:
+  - master
+
+before_install: 
+- curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+- source ~/.bashrc
+- nvm install v17.5.0
+- nvm use v17.5.0
+
+install:
+- npm install -g yarn
+- yarn
+
+before_script:
+- yarn update
+
+script: 
+- yarn build
+
+deploy:
+  provider: pages
+  strategy: git
+  skip_cleanup: true
+  token: $GH_TOKEN
+  local_dir: dist/
+  fqdn: ipa.citruxonve.net
+  target_branch: gh-pages

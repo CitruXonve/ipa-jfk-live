@@ -4,7 +4,7 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    ipaJfk: './src/ipaJfk.jsx',
+    ipaJfk: './src/IpaJfk.jsx',
   },
   module: {
     rules: [{
