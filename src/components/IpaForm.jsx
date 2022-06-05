@@ -10,10 +10,35 @@ import {
   Switch,
   Grid,
   Typography,
-  makeStyles,
 } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import db from '../../lib/db';
+
+const useStyles = (theme) => ({
+  '@global': {
+    ul: {
+      margin: 0,
+      padding: 0,
+      listStyle: 'none',
+    },
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  results: {
+    'font-size': '20px',
+    'min-height': '4rem',
+  },
+  results_span: {
+    'font-family': 'monospace,monospace', // inherited from mui.css
+    'font-size': '15px',
+    margin: '0.5em 0',
+    overflow: 'hidden',
+    'word-break': 'break-all',
+  },
+});
 
 class IpaForm extends React.Component {
   constructor(props) {
@@ -133,7 +158,7 @@ class IpaForm extends React.Component {
     );
   };
 
-  displayIpa = (format, phonemic) => {
+  displayIpa = (classes, format, phonemic) => {
     const group = [];
     const word = this.state.formData?.word || '';
     // const ph = this.state.formData?.ph || '';
@@ -157,10 +182,10 @@ class IpaForm extends React.Component {
           group.push(<li key={`res-grp-${count}`}>{db.display.utf8Encode(ir)}</li>);
           break;
         case 'latex':
-          group.push(<li key={`res-grp-${count}`}><pre>{db.display.latexEncode(ir)}</pre></li>);
+          group.push(<li key={`res-grp-${count}`}><span className={classes?.results_span}>{db.display.latexEncode(ir)}</span></li>);
           break;
         default:
-          group.push(<li key={`res-grp-${count}`}><pre>{JSON.stringify(ir, null, 2)}</pre></li>);
+          group.push(<li key={`res-grp-${count}`}><span className={classes?.results_span}>{JSON.stringify(ir, null, 2)}</span></li>);
           break;
       }
       count += 1;
@@ -168,32 +193,13 @@ class IpaForm extends React.Component {
     return group;
   };
 
-  // const IPAForm = () => {
   render() {
-    const useStyles = makeStyles((theme) => ({
-      '@global': {
-        ul: {
-          margin: 0,
-          padding: 0,
-          listStyle: 'none',
-        },
-      },
-      form: {
-        width: '100%', // Fix IE 11 issue.
-        marginTop: theme.spacing(3),
-      },
-      results: {
-        'font-size': '12px',
-        height: '4rem',
-      },
-    }));
-
-    const classes = useStyles.apply;
+    const { classes } = this.props;
 
     return (
       <React.Fragment>
         <Typography>{this.state.cmu}</Typography>
-        <form id="_frm" className={classes.form} noValidate>
+        <form id="_frm" className={classes?.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -252,8 +258,8 @@ class IpaForm extends React.Component {
             <Grid item xs={12} sm={6}>
               <FormLabel component="legend">Result(s)</FormLabel>
               <Typography variant="h6" color="textPrimary" component="div">
-                <ul id="_results" className={classes.results}>
-                  {this.displayIpa(this.state.format, this.state.isPhonetic ?? false)}
+                <ul id="_results" className={classes?.results}>
+                  {this.displayIpa(classes, this.state.format, this.state.isPhonetic ?? false)}
                 </ul>
               </Typography>
             </Grid>
@@ -264,4 +270,4 @@ class IpaForm extends React.Component {
   }
 }
 
-export default IpaForm;
+export default withStyles(useStyles)(IpaForm);
