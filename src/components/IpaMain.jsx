@@ -69,7 +69,7 @@ function CopyrightSection() {
 }
 
 function IpaMain() {
-  const classes = useStyles.apply(this);
+  const classes = useStyles();
 
   return (
     <React.Fragment>
