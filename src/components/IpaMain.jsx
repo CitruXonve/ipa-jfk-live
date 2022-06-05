@@ -53,13 +53,17 @@ const useStyles = makeStyles((theme) => ({
 function CopyrightSection() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright '}<Copyright fontSize="inherit"/>{' 2020-'}
+      Copyright&nbsp;<Copyright fontSize="inherit"/>&nbsp;2021-
       {new Date().getFullYear()}
-      {' '}
-      <Link color="inherit" href="/#">
+      &nbsp;
+      <Link color="inherit" href="https://github.com/b1f6c1c4/">
         b1f6c1c4
       </Link>
-      {'.'}
+      &nbsp;&amp;&nbsp;
+      <Link color="inherit" href="https://github.com/CitruXonve/">
+        CitruXonve
+      </Link>
+      .
     </Typography>
   );
 }
@@ -73,7 +77,7 @@ function IpaMain() {
       <AppBar position="static" display={{ xs: 'none', sm: 'block' }} color="primary" elevation={0} className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
           <Typography variant="h6" color="inherit" noWrap className={classes.toolbarTitle}>
-            b1f6c1c4/IPA-JFK
+            b1f6c1c4/IPA-JFK (Live)
           </Typography>
           <nav>
             <Link variant="button" color="inherit" href="https://github.com/b1f6c1c4/IPA-JFK" className={classes.link} target="_blank" rel="noopener">
@@ -87,7 +91,7 @@ function IpaMain() {
           IPA-JFK
         </Typography>
         <Typography variant="h6" align="center" color="textSecondary" component="p">
-          IPA narrow transcription of English words in New York City accent
+          International Phonetic Alphabet (IPA)<br/>Narrow transcription of English words in New York City accent
         </Typography>
       </Container>
       <Container maxWidth="sm" component="main">
@@ -106,13 +110,14 @@ function IpaMain() {
         <Grid container spacing={2} justifyContent="space-evenly">
           <Grid item key="footer.title">
             <Typography variant="subtitle1" color="textPrimary" gutterBottom>
-              IPA-JFK
+              IPA-JFK Live
             </Typography>
             <Typography variant="caption" color="textSecondary" display="block" gutterBottom>
               This is free software, licensed under AGPL-v3.0-only.
               See the source code for copying conditions.
-              You can obtain the source code from GitHub:
-              https://github.com/b1f6c1c4/IPA-JFK
+              You can obtain the source code from GitHub:<br/>
+              <a href="https://github.com/b1f6c1c4/IPA-JFK">b1f6c1c4/IPA-JFK</a><br/>
+              <a href="https://github.com/CitruXonve/ipa-jfk-live">CitruXonve/ipa-jfk-live</a>
             </Typography>
           </Grid>
         </Grid>
