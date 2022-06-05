@@ -12,7 +12,7 @@ Stateless server deployment is powered by `Travis-CI`.
 - Node.js 17.x
 - NPM or Yarn
 - Express 4.18
-- React 17.x
+- React 16.x
 - Babel 7.x
 - Webpack 5.x
 
