@@ -63,7 +63,7 @@ class IpaForm extends React.Component {
   };
 
   loadCmuDict = () => {
-    axios.get('/data/cmudict.txt').then(({ data, status, statusText }) => {
+    axios.get('/assets/cmudict.txt').then(({ data, status, statusText }) => {
       if (status !== 200 || statusText !== 'OK' || !data) {
         console.error('Failed to retrieve cmudict', status, statusText);
       }

@@ -5,8 +5,9 @@
   "main": "webServer.js",
   "scripts": {
     "update": "./lib/download.js",
-    "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo",
-    "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --watch",
+    "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --mode=development",
+    "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --mode=development --watch",
+    "build:p": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --mode=production",
     "server": "node webServer.js",
     "lint": "eslint *.js *.jsx src/components/*.jsx || exit 0"
   },
@@ -30,6 +31,7 @@
     "react-dom": "^17.0.2",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
+    "serve-favicon": "^2.5.0",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
