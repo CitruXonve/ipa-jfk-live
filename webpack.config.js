@@ -2,7 +2,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const path = require('path');
 
-module.exports = {
+const copyPluginConfig = new CopyPlugin({
+  patterns: [
+    { from: "data", to: "assets" },
+    // relative path is from src
+    {from: './static/favicon.ico' }, 
+  ],
+});
+
+const config = {
   entry: {
     ipaJfk: './src/IpaJfk.jsx',
   },
@@ -34,7 +42,7 @@ module.exports = {
           options: {
             limit: 8192,
           },
-        }, ],
+        }],
       },
     ],
   },
@@ -51,10 +59,35 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './ipa-jfk.html'
     }),
-    new CopyPlugin({
-      patterns: [
-        { from: "data", to: "data" },
-      ],
-    }),
+    copyPluginConfig,
   ],
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode === 'production') {
+    return {
+      ...config, 
+      mode: 'production',
+      plugins: [
+        new HtmlWebpackPlugin({
+          template: './ipa-jfk-prod.html'
+        }),
+        copyPluginConfig,
+      ],
+      // reduce generated file sizes
+      devtool: false,
+      performance: {
+        hints: false,
+      },
+      optimization: {
+        splitChunks: {
+          minSize: 10000,
+          maxSize: 250000,
+        }
+      },
+    };
+  }
+
+  // argv.mode === 'development'
+  return config;
 };

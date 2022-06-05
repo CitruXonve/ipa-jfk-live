@@ -5,9 +5,11 @@
   "main": "webServer.js",
   "scripts": {
     "update": "./lib/download.js",
-    "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo",
-    "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --watch",
+    "build": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --mode=development",
+    "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --mode=development --watch",
+    "build:p": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --mode=production",
     "server": "node webServer.js",
+    "clean": "if [ -d 'dist/' ]; then rm -r dist/; fi",
     "lint": "eslint *.js *.jsx src/components/*.jsx || exit 0"
   },
   "repository": "git+https://github.com/CitruXonve/ipa-jfk-live.git",
@@ -20,16 +22,18 @@
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@material-ui/styles": "^4.11.5",
     "axios": "^0.27.2",
     "escape-string-regexp": "4.0.0",
     "express": "^4.18.1",
     "file-loader": "^6.2.0",
     "prismjs": "^1.28.0",
     "promise": "^8.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
+    "serve-favicon": "^2.5.0",
     "url-loader": "^4.1.1"
   },
   "devDependencies": {
@@ -55,5 +59,9 @@
     "style-loader": "^3.3.1",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.9.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   }
 }

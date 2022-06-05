@@ -15,16 +15,16 @@ before_install:
 - source ~/.bashrc
 - nvm install v17.5.0
 - nvm use v17.5.0
+- npm install -g yarn
 
 install:
-- npm install -g yarn
 - yarn
 
 before_script:
 - yarn update
 
 script: 
-- yarn build
+- yarn build:p
 
 deploy:
   provider: pages

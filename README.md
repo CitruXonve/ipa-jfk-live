@@ -9,9 +9,12 @@ Stateless server deployment is powered by `Travis-CI`.
 
 ## Prerequisites
 
-- Node.js 17.x+
-- npm or yarn
-- Python 3.6.x+
+- Node.js 17.x
+- NPM or Yarn
+- Express 4.18
+- React 16.x
+- Babel 7.x
+- Webpack 5.x
 
 ## Usage
 
