@@ -199,7 +199,7 @@ class IpaForm extends React.Component {
     return (
       <React.Fragment>
         <Typography>{this.state.cmu}</Typography>
-        <form id="_frm" className={classes?.form} noValidate>
+        <form id="_frm" className={classes?.form} noValidate onSubmit={(e) => { e.preventDefault(); } }>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
