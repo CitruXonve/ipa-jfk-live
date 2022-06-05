@@ -24,7 +24,7 @@ before_script:
 - yarn update
 
 script: 
-- yarn build
+- yarn build:p
 
 deploy:
   provider: pages
