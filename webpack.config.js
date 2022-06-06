@@ -12,13 +12,24 @@ const copyPluginConfig = new CopyPlugin({
 
 const config = {
   entry: {
-    ipaJfk: './src/IpaJfk.jsx',
+    ipaJfk: './src/IpaJfk.tsx',
+  },
+  // source maps makes it easier to track down errors and warnings
+  // to their own original locations.
+  devtool: 'eval-cheap-module-source-map',
+  devServer: {
+    static: './dist',
   },
   module: {
     rules: [{
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: ['ts-loader'],
       },
       {
         test: /\.css$/,
@@ -47,35 +58,37 @@ const config = {
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.jsx'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
   },
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
+    path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',  // files get served correctly on localhost:portno
     filename: '[name].bundle.js',
+    clean: true,  // cleaning up ./dist before each build
   },
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
-      template: './ipa-jfk.html'
+      template: './src/ipa-jfk.html'
     }),
     copyPluginConfig,
   ],
 };
 
 module.exports = (env, argv) => {
-  if (argv.mode === 'production') {
+  if (argv?.mode === 'production') {
     return {
       ...config, 
       mode: 'production',
+      // reduce generated file sizes
+      devtool: false,
+      devServer: undefined,
       plugins: [
         new HtmlWebpackPlugin({
-          template: './ipa-jfk-prod.html'
+          template: './src/ipa-jfk-prod.html'
         }),
         copyPluginConfig,
       ],
-      // reduce generated file sizes
-      devtool: false,
       performance: {
         hints: false,
       },
