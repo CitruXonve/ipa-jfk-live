@@ -4,10 +4,15 @@ const express = require('express');
 const { readFile } = require('fs');
 const favicon = require('serve-favicon');
 const path = require('path');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
 
 const portno = 3000; // Port number to use
 
 const app = express();
+const args = require('minimist')(process.argv.slice(2));
+const config = require('./webpack.config.js')(undefined, args);
+const compiler = webpack(config);
 
 // http://expressjs.com/en/starter/static-files.html
 app.use(express.static(__dirname));
@@ -15,9 +20,13 @@ app.use(express.static(__dirname));
 // serving a favicon
 app.use(favicon(path.join(__dirname, 'static', 'favicon.ico')));
 
-app.get('/', (req, res) => {
-  res.redirect('/ipa-jfk.html');
-});
+// Tell express to use the webpack-dev-middleware and use the webpack.config.js
+// configuration file as a base.
+app.use(
+  webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+  }),
+);
 
 app.get('/assets/:file_name', (req, res) => {
   const fileName = req.params.file_name;

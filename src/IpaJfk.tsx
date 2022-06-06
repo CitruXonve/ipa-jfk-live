@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import IpaMain from './components/IpaMain';
 import './scss/app.scss';
 
-function IpaJfk() {
+function IpaJfk(): JSX.Element {
   return (
     <div className="App">
       <IpaMain />
