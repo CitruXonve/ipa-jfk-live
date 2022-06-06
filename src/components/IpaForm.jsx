@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import db from '../../lib/db';
+import db from '../../lib/db.ts';
 
 const useStyles = (theme) => ({
   '@global': {
