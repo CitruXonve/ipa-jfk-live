@@ -15,13 +15,13 @@
  * along with IPA-JFK.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-const escapeStringRegexp = require('escape-string-regexp');
-const core = require('./analysis');
+import * as escapeStringRegexp from 'escape-string-regexp';
+import * as core from './analysis';
 
-let dictF;
-let dict;
+let dictF: string;
+let dict: { [key: string]: string[] };
 
-function cache() {
+function cache(): void {
   if (!dictF) throw new Error('No database loaded.');
   dict = {};
   dictF.split('\n').forEach((l) => {
@@ -38,12 +38,13 @@ function cache() {
   });
 }
 
-const norm = (w) => w.trim().toUpperCase().replace(/ /g, '-');
+const norm = (w: string): string => w.trim().toUpperCase().replace(/ /g, '-');
 
-function query(word) {
+function query(word: string): string[] {
   const w = norm(word);
   if (dict && (w in dict)) return dict[w];
   return [];
+  // TODO: complete reference phoneme feature
   // if (!dictF) throw new Error('No database loaded.');
   // const regex = new RegExp(
   //   `\\b${escapeStringRegexp(w.toUpperCase())}(?:\\([0-9]+\\))?  ([A-Z0-9 ]+)\\b`,
@@ -56,11 +57,8 @@ function query(word) {
   // return res;
 }
 
-module.exports = {
-  load: (file) => { dictF = file.replace(/_/g, '-'); },
-  cache,
-  query,
-  process: (ph, word, phonemic, hints) => core(ph.trim(), norm(word), phonemic, hints),
-  display: core.display,
-};
-module.exports.default = module.exports;
+const load = (file: string) => { dictF = file.replace(/_/g, '-'); };
+const process = (ph: string, word: string, phonemic: boolean, hints: { aeHint: string, syllableHint: string }) => core(ph.trim(), norm(word), phonemic, hints);
+const display = core.display;
+
+export { load, cache, process, query, display };
