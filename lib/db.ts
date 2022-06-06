@@ -57,10 +57,8 @@ function query(word: string): string[] {
   // return res;
 }
 
-export default {
-  load: (file: string) => { dictF = file.replace(/_/g, '-'); },
-  cache,
-  query,
-  process: (ph: string, word: string, phonemic: boolean, hints: { aeHint: string, syllableHint: string }) => core(ph.trim(), norm(word), phonemic, hints),
-  display: core.display,
-};
+const load = (file: string) => { dictF = file.replace(/_/g, '-'); };
+const process = (ph: string, word: string, phonemic: boolean, hints: { aeHint: string, syllableHint: string }) => core(ph.trim(), norm(word), phonemic, hints);
+const display = core.display;
+
+export { load, cache, process, query, display };

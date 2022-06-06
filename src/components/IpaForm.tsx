@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import {
   TextField,
   FormControl,
@@ -11,11 +11,12 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, Theme } from '@material-ui/core/styles';
 import axios from 'axios';
-import db from '../../lib/db.ts';
 
-const useStyles = (theme) => ({
+const db = require('../../lib/db');
+
+const useStyles = (theme: Theme) => ({
   '@global': {
     ul: {
       margin: 0,
@@ -40,8 +41,23 @@ const useStyles = (theme) => ({
   },
 });
 
-class IpaForm extends React.Component {
-  constructor(props) {
+interface IpaFormProps {
+  format: 'unicode' | 'latex' | 'raw',
+  outputPhonetic: boolean,
+  showAdv: boolean,
+  classes: any,
+}
+
+interface IpaFormStates {
+  format: string,
+  isPhonetic: boolean,
+  showAdv: boolean,
+  cmuDict?: string,
+  formData: { [id: string]: string },
+}
+
+class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
+  constructor(props: IpaFormProps) {
     super(props);
     this.state = {
       format: props.format,
@@ -52,14 +68,14 @@ class IpaForm extends React.Component {
     };
   }
 
-  handleToggleAdv = (event) => {
+  handleToggleAdv = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       ...this.state,
       [event.target.name]: event.target.checked,
     });
   };
 
-  handleFormatChange = (event) => {
+  handleFormatChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const formatType = event.target.value;
 
     if (formatType && typeof formatType === 'string') {
@@ -70,7 +86,7 @@ class IpaForm extends React.Component {
     }
   };
 
-  handlePhoneticChange = (event) => {
+  handlePhoneticChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checked = event.target.checked;
 
     this.setState({
@@ -79,8 +95,8 @@ class IpaForm extends React.Component {
     });
   };
 
-  handleFormChange = (fieldName) => {
-    return (event) => {
+  handleFormChange = (fieldName: string) => {
+    return (event: React.ChangeEvent<HTMLInputElement>) => {
       const newFormData = this.state.formData ?? {};
       newFormData[fieldName] = event.target.value;
       this.setState({ formData: newFormData });
@@ -158,8 +174,8 @@ class IpaForm extends React.Component {
     );
   };
 
-  displayIpa = (classes, format, phonemic) => {
-    const group = [];
+  displayIpa = (classes: any, format: string, phonemic: boolean) => {
+    const group: React.DetailedHTMLProps<any, any>[] = [];
     const word = this.state.formData?.word || '';
     // const ph = this.state.formData?.ph || '';
     const ae = this.state.formData?.ae || '';
@@ -198,7 +214,6 @@ class IpaForm extends React.Component {
 
     return (
       <React.Fragment>
-        <Typography>{this.state.cmu}</Typography>
         <form id="_frm" className={classes?.form} noValidate onSubmit={(e) => { e.preventDefault(); } }>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>

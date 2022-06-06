@@ -3,7 +3,7 @@ import { Container, AppBar, Card, CardContent, CardHeader, CssBaseline, Link, To
 import { pink } from '@material-ui/core/colors';
 import { Copyright } from '@material-ui/icons';
 import { withStyles } from '@material-ui/core/styles';
-import IpaForm from './IpaForm';
+import IpaForm from './IpaForm.tsx';
 
 const useStyles = (theme) => ({
   '@global': {
