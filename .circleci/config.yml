@@ -1,0 +1,31 @@
+workflows:
+  version: 2
+  publish_webapp:
+    jobs:
+      - build_yarn
+jobs:
+  build_yarn:
+    filters:
+      branches:
+        only: master
+        ignore: gh-pages
+    docker:
+      - image: node:17.9
+    steps:
+      - checkout
+      - run:
+          name: NPM dependencies
+          command: |
+            nvm install v17.5.0
+            nvm use v17.5.0
+            npm install -g yarn
+      - run:
+          name: Github-pages CNAME setup
+          command: |
+            mkdir ./public
+            echo "$CUSTOM_HOST_NAME" > ./public/CNAME
+      - run: 
+          name: YARN build
+          command: |
+            yarn update
+            yarn build:p
