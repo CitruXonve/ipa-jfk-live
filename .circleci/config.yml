@@ -16,7 +16,7 @@ jobs:
       - run:
           name: NPM dependencies
           command: |
-            npm install -g yarn
+            npm i
       - run:
           name: Github-pages CNAME setup
           command: |
