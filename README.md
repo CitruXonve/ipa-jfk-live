@@ -12,15 +12,16 @@ Stateless server deployment is powered by `Travis-CI`.
 - Node.js 17.x
 - NPM or Yarn
 - Express 4.18
-- React 16.x
+- React 17.x
 - Babel 7.x
 - Webpack 5.x
+- TypeScript 4.x
 
 ## Usage
 
 > yarn update # caches remote dictionary to local  
-> yarn build # generate static pages  
-> yarn server # start local demo  
+> yarn build # generate static pages (under development mode)
+> yarn server # start local demo (under development mode)
 
 ## License 
 
