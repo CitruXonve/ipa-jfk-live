@@ -16,8 +16,6 @@ jobs:
       - run:
           name: NPM dependencies
           command: |
-            nvm install v17.5.0
-            nvm use v17.5.0
             npm install -g yarn
       - run:
           name: Github-pages CNAME setup
