@@ -1,0 +1,74 @@
+@use "@material/theme/color-palette";
+
+:global ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// .appBar {
+//   borderBottom: `1px solid ${theme.palette.divider}`,
+//   backgroundColor: pink[500],
+//   // display: { xs: 'none', sm: 'block' },
+//   [theme.breakpoints.down("sm")]: {
+//     display: "none",
+//   },
+//   [theme.breakpoints.up("sm")]: {
+//     display: "block",
+//   },
+// }
+:global .MuiAppBar-root.MuiAppBar-colorPrimary {
+  background-color: color-palette.$pink-500;
+}
+
+// .toolbar {
+:global .MuiAppBar-root .MuiToolbar-root.MuiToolbar-regular {
+  flex-wrap: wrap;
+}
+
+// .toolbarTitle {
+:global .MuiAppBar-root .MuiTypography-root {
+  flex-grow: 1;
+}
+
+// .link {
+:global .MuiAppBar-root nav .MuiTypography-root {
+  margin: 8px 12px;
+  //   margin: theme.spacing(1, 1.5),
+}
+
+// .heroContent {
+:global main.MuiContainer-root.heroContent {
+  padding: 64px 0 48px;
+  //   padding: theme.spacing(8, 0, 6),
+}
+
+// .cardHeader {
+:global main.MuiContainer-root .MuiCardHeader-root {
+  background-color: color-palette.$pink-200;
+  //   backgroundColor: theme.palette.type === "light" ? pink[200] : pink[700],
+}
+
+// .cardPricing {
+:global main.MuiContainer-root .MuiCardContent-root {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin-bottom: 16px;
+  //   marginBottom: theme.spacing(2),
+}
+
+// .footer {
+:global footer.MuiContainer-root {
+  //   borderTop: `1px solid ${theme.palette.divider}`,
+  margin-top: 64px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  //   marginTop: theme.spacing(8),
+  //   paddingTop: theme.spacing(3),
+  //   paddingBottom: theme.spacing(3),
+  //   [theme.breakpoints.up("sm")]: {
+  //     paddingTop: theme.spacing(6),
+  //     paddingBottom: theme.spacing(6),
+  //   }
+}

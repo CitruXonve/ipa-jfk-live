@@ -1,0 +1,27 @@
+:global ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+// .form {
+:global #_frm {
+  width: 100%; // Fix IE 11 issue.
+  margin-top: 24px;
+  // marginTop: theme.spacing(3),
+}
+
+// .results {
+:global #_results {
+  font-size: 20px;
+  min-height: 4rem;
+}
+
+// .resultsSpan {
+:global #_results li {
+  font-family: monospace, monospace; // inherited from mui.css
+  font-size: 15px;
+  margin: 0.5em 0;
+  overflow: hidden;
+  word-break: break-all;
+}

@@ -11,41 +11,15 @@ import {
   Grid,
   Typography,
 } from '@material-ui/core';
-import { withStyles, Theme } from '@material-ui/core/styles';
 import axios from 'axios';
+import '../styles/IpaForm.scss';
 
 const db = require('../../lib/db');
-
-const useStyles = (theme: Theme) => ({
-  '@global': {
-    ul: {
-      margin: 0,
-      padding: 0,
-      listStyle: 'none',
-    },
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  results: {
-    'font-size': '20px',
-    'min-height': '4rem',
-  },
-  results_span: {
-    'font-family': 'monospace,monospace', // inherited from mui.css
-    'font-size': '15px',
-    margin: '0.5em 0',
-    overflow: 'hidden',
-    'word-break': 'break-all',
-  },
-});
 
 interface IpaFormProps {
   format: 'unicode' | 'latex' | 'raw',
   outputPhonetic: boolean,
   showAdv: boolean,
-  classes: any,
 }
 
 interface IpaFormStates {
@@ -174,7 +148,7 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
     );
   };
 
-  displayIpa = (classes: any, format: string, phonemic: boolean) => {
+  displayIpa = (format: string, phonemic: boolean) => {
     const group: React.DetailedHTMLProps<any, any>[] = [];
     const word = this.state.formData?.word || '';
     // const ph = this.state.formData?.ph || '';
@@ -198,10 +172,10 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
           group.push(<li key={`res-grp-${count}`}>{db.display.utf8Encode(ir)}</li>);
           break;
         case 'latex':
-          group.push(<li key={`res-grp-${count}`}><span className={classes?.results_span}>{db.display.latexEncode(ir)}</span></li>);
+          group.push(<li key={`res-grp-${count}`}><span>{db.display.latexEncode(ir)}</span></li>);
           break;
         default:
-          group.push(<li key={`res-grp-${count}`}><span className={classes?.results_span}>{JSON.stringify(ir, null, 2)}</span></li>);
+          group.push(<li key={`res-grp-${count}`}><span>{JSON.stringify(ir, null, 2)}</span></li>);
           break;
       }
       count += 1;
@@ -210,11 +184,9 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
   };
 
   render() {
-    const { classes } = this.props;
-
     return (
       <React.Fragment>
-        <form id="_frm" className={classes?.form} noValidate onSubmit={(e) => { e.preventDefault(); } }>
+        <form id="_frm" noValidate onSubmit={(e) => { e.preventDefault(); } }>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -273,8 +245,8 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
             <Grid item xs={12} sm={6}>
               <FormLabel component="legend">Result(s)</FormLabel>
               <Typography variant="h6" color="textPrimary" component="div">
-                <ul id="_results" className={classes?.results}>
-                  {this.displayIpa(classes, this.state.format, this.state.isPhonetic ?? false)}
+                <ul id="_results">
+                  {this.displayIpa(this.state.format, this.state.isPhonetic ?? false)}
                 </ul>
               </Typography>
             </Grid>
@@ -285,4 +257,4 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
   }
 }
 
-export default withStyles(useStyles)(IpaForm);
+export default IpaForm;
