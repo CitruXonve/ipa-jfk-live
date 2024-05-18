@@ -28,6 +28,7 @@ interface IpaFormStates {
   showAdv: boolean,
   cmuDict?: string,
   formData: { [id: string]: string },
+  ipaResults: any[],
 }
 
 class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
@@ -39,6 +40,7 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
       showAdv: props.showAdv,
       cmuDict: undefined,
       formData: {},
+      ipaResults: [],
     };
   }
 
@@ -91,6 +93,13 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
 
   componentDidMount() {
     this.loadCmuDict();
+
+    const submitButton = document.createElement('button');
+    submitButton.textContent = "🔍";
+    submitButton.type = "submit";
+    submitButton.className = "search-btn";
+    submitButton.onclick = () => { this.handleSubmit(); };
+    document.getElementById('_word').parentNode.appendChild(submitButton);
   }
 
   Advanced = () => {
@@ -183,6 +192,16 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
     return group;
   };
 
+  handleSubmit = () => {
+    const result = this.displayIpa(this.state.format, this.state.isPhonetic ?? false);
+
+    console.warn(result);
+    this.setState({
+      ...this.state,
+      ipaResults: result,
+    });
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -246,7 +265,7 @@ class IpaForm extends React.Component<IpaFormProps, IpaFormStates> {
               <FormLabel component="legend">Result(s)</FormLabel>
               <Typography variant="h6" color="textPrimary" component="div">
                 <ul id="_results">
-                  {this.displayIpa(this.state.format, this.state.isPhonetic ?? false)}
+                  { this.state.ipaResults }
                 </ul>
               </Typography>
             </Grid>

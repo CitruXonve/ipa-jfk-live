@@ -25,3 +25,13 @@
   overflow: hidden;
   word-break: break-all;
 }
+
+:global button.search-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 24px;
+  min-width: 36px;
+  height: 100%;
+  cursor: pointer;
+}
